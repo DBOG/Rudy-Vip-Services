@@ -1,0 +1,66 @@
+﻿<Page x:Class="Vip_Services_Rudy_2020.NieuweReservatiePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Vip_Services_Rudy_2020"
+      xmlns:wpfTool="clr-namespace:Xceed.Wpf.Toolkit;assembly=Xceed.Wpf.Toolkit"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="NieuweReservatiePage">
+
+    <Grid Background="White">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            
+            <Label Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" x:Name="lblDatum" Content="Datum"/>
+            <DatePicker x:Name="datePicker" Grid.Column="1" Grid.Row="2" Margin="7"></DatePicker>
+            
+            <Label Grid.Column="2" Grid.Row="1" VerticalAlignment="Center" x:Name="lblKlantNummer" Content="Klantnummer"/>
+            <TextBox x:Name="txtBoxklantId" Grid.Column="2" Grid.Row="2" Margin="7"></TextBox>
+           
+            <Label Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" x:Name="lblVoertuig" Content="Voertuig"/>
+            <ComboBox x:Name="comboBoxVoertuig" Grid.Column="1" Grid.Row="6" Margin="7" SelectionChanged="comboBoxVoertuig_SelectionChanged">
+            </ComboBox>
+            
+            
+            <Label Grid.Column="2" Grid.Row="5" VerticalAlignment="Center" x:Name="lblOphaalLocatie" Content="Ophaal Locatie:"/>
+            <ComboBox x:Name="comboBoxOphaalLoc" Grid.Column="2" Grid.Row="6" Margin="7">
+            </ComboBox>
+            
+            <Label Grid.Column="3" Grid.Row="5" VerticalAlignment="Center" x:Name="lblAfzetLocatie" Content="Afzet Locatie: "/>
+            <ComboBox x:Name="comboBoxAfzetLoc" Grid.Column="3" Grid.Row="6" Margin="7">
+            </ComboBox>
+            
+            <Label Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" x:Name="StartUur" Content="start uur: "/>
+            <wpfTool:IntegerUpDown ValueChanged="startuur_Changed" x:Name="timeStart" Margin="7" Grid.Column="1" Grid.Row="4" ></wpfTool:IntegerUpDown>
+            
+            <Label Grid.Column="2" Grid.Row="3" VerticalAlignment="Center" x:Name="EindUur" Content="totaal uur: "/>
+            <wpfTool:IntegerUpDown x:Name="totaaluur" Minimum="1" Margin="7" Grid.Column="2" Grid.Row="4" ></wpfTool:IntegerUpDown>
+            
+            <Label Grid.Column="3" Grid.Row="3" VerticalAlignment="Center" x:Name="lblArrangement" Content="Arrangement: "/>
+            <ComboBox x:Name="comboBoxArrangement" SelectionChanged="arrangement_Changed" Grid.Column="3" Grid.Row="4" Margin="7">
+            </ComboBox>
+            <Button Grid.Column="4" Grid.Row="6" Margin="7" Click="btnPlaatsReservatie_Click">Plaats Reservatie</Button>
+        </Grid>
+
+        <Label Name="lblNieuweReservatie" HorizontalAlignment="Left" FontSize="22" VerticalAlignment="Top" Margin="17,16,0,0" >Nieuwe Reservatie</Label>
+    </Grid>
+</Page>

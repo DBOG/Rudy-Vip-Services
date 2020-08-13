@@ -1,0 +1,53 @@
+﻿<Page x:Class="Vip_Services_Rudy_2020.ZoekReservatiePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Vip_Services_Rudy_2020"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="1000"
+      Title="ZoekReservatiePage">
+
+    <Grid Background="White">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <Label x:Name="lblKlantNaam" Grid.Row="1" Grid.Column="1" Margin="7">Klant naam:</Label>
+            <TextBox x:Name="txtBoxKlantNaam" Grid.Row="2" Grid.Column="1" Margin="7" TextChanged="txtBoxKlantNaam_TextChanged"></TextBox>
+            <Label x:Name="lblDatum" Grid.Row="1" Grid.Column="2" Margin="7">Datum:</Label>
+            <DatePicker  x:Name="datePickerBox" Grid.Row="2" Grid.Column="2" Margin="7" SelectedDateChanged="DateTimePick_ValueChanged"></DatePicker>
+            <Button x:Name="btnCancelReservation" Grid.Row="2" Grid.Column="6" Margin="7" Click="btnCancelReservation_Click">Cancel Reservation</Button>
+        </Grid>
+        <Label Name="lblZoekReservatie" HorizontalAlignment="Left" FontSize="22" VerticalAlignment="Top" Margin="17,16,0,0">Zoek Reservatie</Label>
+        <ListView x:Name="listViewReservaties" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="225" Width="900" Margin="50">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Klant Naam" Width="200" DisplayMemberBinding="{Binding klant}" />
+                    <GridViewColumn Header="Datum" Width="100" DisplayMemberBinding="{Binding Datum}" />
+                    <GridViewColumn Header="Ophaal Locatie" Width="100" DisplayMemberBinding="{Binding OphaalLocatie}" />
+                    <GridViewColumn Header="Voertuig" Width="200" DisplayMemberBinding="{Binding GereserveerdeVoertuig}" />
+                    <GridViewColumn Header="Arrangement" Width="85" DisplayMemberBinding="{Binding Arrangement}" />
+                    <GridViewColumn Header="Excl Btw" Width="75" DisplayMemberBinding="{Binding TotaalExclusiefBtw}" />
+                    <GridViewColumn Header="ixcl Btw" Width="75" DisplayMemberBinding="{Binding TeBetalenBedrag}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Page>

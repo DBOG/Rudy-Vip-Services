@@ -1,0 +1,20 @@
+Porsche Cayenne Limousine White;310;1500;1200;1600
+Porsche Cayenne Limousine Electric Blue;350;1600;1300;1750
+Mercedes SL55 AMG Silver;225;0;700;1000
+Tesla Model X White;600;0;2500;2700
+Tesla Model S White;500;0;2000;2200
+Porsche Cayenne Limousine White;300;1500;1000;0;
+Porsche Cayenne Limousine White;300;1500;1000;0;
+Porsche Cayenne Limousine White;300;1500;1000;0;
+Porsche Cayenne Limousine White;300;1500;1000;0;
+Porsche Cayenne Limousine White;300;1500;1000;0;
+Lincoln XXL Navigator Limousine White;255;790;650;950
+Lincoln Limousine Pink;180;900;500;1000
+Lincoln Limousine Black;195;850;600;1000
+Hummer Limousine Yellow;225;1290;790;1500
+Hummer Limousine Black;195;990;0;1100
+Hummer Limousine White;195;990;0;0;
+Chrysler 300C Sedan White;175;0;450;600
+Chrysler 300C Sedan Black;175;0;450;600
+Chrysler 300C Limousine White;175;800;500;1000
+Chrysler 300C Limousine Tuxedo Creme;180;800;600;0;
