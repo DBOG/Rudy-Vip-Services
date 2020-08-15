@@ -30,23 +30,23 @@ namespace Vip_Services_Rudy_2020
         private void txtBoxKlantNaam_TextChanged(object sender, TextChangedEventArgs e)
         {
             string text = txtBoxKlantNaam.Text;
-            listViewReservaties.Items.Clear();
+            if (listViewReservaties.Items.Count >= 1)
+                listViewReservaties.ClearValue(ItemsControl.ItemsSourceProperty);
+
             List<Reservatie> reservaties;
             if (!datePickerBox.SelectedDate.HasValue)
                 reservaties = rm.GetReservatiesByKlantNaam(text);
             else
                 reservaties = rm.GetReservatiesByKlantAndDatum(text, datePickerBox.SelectedDate.Value);
-            
-            foreach (Reservatie r in reservaties)
-            {
-                if (!listViewReservaties.Items.Contains(r))
-                    listViewReservaties.Items.Add(r);
-            }
+
+            listViewReservaties.ItemsSource = reservaties;
         }
         private void DateTimePick_ValueChanged(Object sender, EventArgs e)
         {
             string text = txtBoxKlantNaam.Text;
-            listViewReservaties.Items.Clear();
+            if(listViewReservaties.Items.Count >= 1)
+                listViewReservaties.ClearValue(ItemsControl.ItemsSourceProperty);
+
             List<Reservatie> reservaties;
             if (text == "")
                 reservaties = rm.GetReservatiesByDatum(datePickerBox.SelectedDate.Value);
@@ -70,10 +70,10 @@ namespace Vip_Services_Rudy_2020
                     r.Add(v);
                     confirmMessage += $"{v.klant.Naam}, {v.Datum}, {v.GereserveerdeVoertuig.Naam}\n";
                 }
-                var result = MessageBox.Show(confirmMessage, "Confirmation", MessageBoxButton.YesNo);
 
-                if(result == MessageBoxResult.Yes)
+                if(MessageBox.Show(confirmMessage, "Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                     rm.CancelReservation(r);
+
             }
         }
     }

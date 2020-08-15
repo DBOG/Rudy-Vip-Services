@@ -9,7 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DomainLibrary", "DomainLib\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataLayer", "DataLayer2\DataLayer.csproj", "{86C240BA-FDAF-44B9-B8BE-A42B1919BC61}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppPresentationLayer", "ConsoleAppPresentationLayer\ConsoleAppPresentationLayer.csproj", "{CD13F4AE-9219-4EF0-87E3-61E4195BC3D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleAppPresentationLayer", "ConsoleAppPresentationLayer\ConsoleAppPresentationLayer.csproj", "{CD13F4AE-9219-4EF0-87E3-61E4195BC3D0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "logo", "logo", "{80D76A8A-CD5C-41F0-8619-A86462C85A51}"
+	ProjectSection(SolutionItems) = preProject
+		D:\Hogent\Programmeren\Prog Project\logo\Screenshot_2.png = D:\Hogent\Programmeren\Prog Project\logo\Screenshot_2.png
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

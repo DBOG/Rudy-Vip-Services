@@ -28,26 +28,52 @@ namespace DomainLibrary
             if (arrangement == Arrangement.NightLife)
             {
                 subtotaal = gereseveerdeVoortuig.NightLife;
+                if(aantalUren > 7)
+                {
+                    int aantalOveruren = 7 - aantalUren;
+                    subtotaal += aantalOveruren * (gereseveerdeVoortuig.EersteUur * 1.4m);
+                }
             }
             else if (arrangement == Arrangement.Wellness)
             {
                 subtotaal = gereseveerdeVoortuig.Wellness;
+                if (datum.Hour == 12 && aantalUren == 10)// 1 nachtuur mogelijk
+                    subtotaal += gereseveerdeVoortuig.EersteUur * 1.4m;
             }
             else if (arrangement == Arrangement.Wedding)
             {
                 subtotaal = gereseveerdeVoortuig.Wedding;
+                int einduur = datum.Hour + aantalUren;
+
+                if (einduur >= 22 && aantalUren > 7)
+                {
+                    int nachturen = einduur - 21;
+                    subtotaal += nachturen * (gereseveerdeVoortuig.EersteUur * 0.65m);
+                }
             }
             else
             {
                 subtotaal = gereseveerdeVoortuig.EersteUur;
-                subtotaal += Math.Round(((gereseveerdeVoortuig.EersteUur * aantalUren - 1) / 100) * 65);
+                int aantalNachturen = 0;
+                if(datum.Hour + aantalUren >= 22)
+                {
+                    aantalNachturen = (datum.Hour + aantalUren) - 21;
+                    if (aantalNachturen > 9)
+                        aantalNachturen = 9;
+
+                    subtotaal += aantalNachturen * gereseveerdeVoortuig.EersteUur * 1.4m;
+                }
+                aantalNachturen += 1;
+
+               subtotaal += Math.Round((gereseveerdeVoortuig.EersteUur * (aantalUren - aantalNachturen)) * 0.65m);
+
             }
 
             //add discount to subtotal and btw
             aangerekendeKortingen = GetDiscount(klant.Type, klant.Naam, datum);
             totaalExclusiefBtw = subtotaal - ((subtotaal / 100) * aangerekendeKortingen);
 
-            btwBedrag = (totaalExclusiefBtw / 100) * 6;
+            btwBedrag = totaalExclusiefBtw * 0.06m;
 
             teBetalenBedrag = totaalExclusiefBtw + btwBedrag;
 

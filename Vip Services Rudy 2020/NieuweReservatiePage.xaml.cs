@@ -28,24 +28,11 @@ namespace Vip_Services_Rudy_2020
 
             rm = new ReservatieManager(new UnitOfWork(new ReservatieContext()));
 
-            foreach (Voertuig v in rm.getVoertuigen())
-                comboBoxVoertuig.Items.Add($"{v.Naam} ,{v.Id}");
+            comboBoxVoertuig.ItemsSource = rm.getVoertuigen();
+            comboBoxArrangement.ItemsSource = Arrangement.GetValues(typeof(Arrangement));
+            comboBoxOphaalLoc.ItemsSource = Locaties.GetValues(typeof(Locaties));
+            comboBoxAfzetLoc.ItemsSource = Locaties.GetValues(typeof(Locaties));
 
-            if(comboBoxArrangement.Items.Count < 3)
-            {
-                foreach (var value in Arrangement.GetValues(typeof(Arrangement)))
-                {
-                    if (!comboBoxArrangement.Items.Contains(value.ToString()))
-                        comboBoxArrangement.Items.Add(value.ToString());
-                }
-            }
-            foreach (var value in Locaties.GetValues(typeof(Locaties)))
-            {
-                if (!comboBoxOphaalLoc.Items.Contains(value))
-                    comboBoxOphaalLoc.Items.Add(value);
-                if (!comboBoxAfzetLoc.Items.Contains(value))
-                    comboBoxAfzetLoc.Items.Add(value);
-            }
             comboBoxOphaalLoc.SelectedIndex = 0;
             comboBoxAfzetLoc.SelectedIndex = 0;
         }
@@ -53,14 +40,16 @@ namespace Vip_Services_Rudy_2020
         {
             //check if everyting is correctly filled in:
             string errorMessage = "Please Fill in the next items: \n\n";
-            if(datePicker.SelectedDate.HasValue == false) { errorMessage += "DateTime\n"; }
-            if(datePicker.SelectedDate.Value < DateTime.Now) { errorMessage += "Date cannot be in the past!\n"; }
-            if(txtBoxklantId.Text == "") { errorMessage += "Klant Id\n"; }
-            if(comboBoxArrangement.SelectedItem == null) { errorMessage += "Arrangement\n"; }
-            if(timeStart.Text == null) { errorMessage += "Start uur\n"; }
-            if(totaaluur.Text == null) { errorMessage += "Totaal uur\n"; }
-            if(comboBoxVoertuig.SelectedItem == null) { errorMessage += "Voertuig\n"; }
-            if(errorMessage.Length > 35)
+
+            if(datePicker.SelectedDate.HasValue == false)       { errorMessage += "DateTime\n"; }
+            if(datePicker.SelectedDate.Value < DateTime.Now)    { errorMessage += "Date cannot be in the past!\n"; }
+            if(txtBoxklantId.Text == "")                        { errorMessage += "Klant Id\n"; }
+            if(comboBoxArrangement.SelectedItem == null)        { errorMessage += "Arrangement\n"; }
+            if(timeStart.Text == null)                          { errorMessage += "Start uur\n"; }
+            if(totaaluur.Text == null)                          { errorMessage += "Totaal uur\n"; }
+            if(comboBoxVoertuig.SelectedItem == null)           { errorMessage += "Voertuig\n"; }
+
+            if(errorMessage.Length > 35)//35 = the length of the original errormessage.
                 MessageBox.Show(errorMessage, "Oh ohh you forgot some information", MessageBoxButton.OK);
             else
             {
@@ -80,36 +69,36 @@ namespace Vip_Services_Rudy_2020
 
                 //validation for correct price
                 string message = $"{r.Arrangement}\n\n{r.Datum}\n{r.GereserveerdeVoertuig.Naam}\nExcl Btw:{r.TotaalExclusiefBtw}\nInc Btw:{r.TeBetalenBedrag}\n{r.klant.Naam}\n";
-                MessageBoxResult result = MessageBox.Show(message, "Price Confirmation", MessageBoxButton.YesNo);
-                if(result == MessageBoxResult.Yes)
+                if(MessageBox.Show(message, "Price Confirmation", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                {
                     rm.CreateNewReservation(r);
+                    MessageBox.Show("Reservatie Succesvol toegevoegd!", "Succes", MessageBoxButton.OK);
+                }
+
             }
            
         }
         private void arrangement_Changed(object sender, RoutedEventArgs e)
         {
-            //arrangement enum index:
-            //Airport = 0,
-            //Business = 1,
-            //Wedding = 2,
-            //Wellness = 3,
-            //NightLife = 4
-
             timeStart.Value = null;
             totaaluur.Value = null;
             comboBoxVoertuig.SelectedItem = null;
+
             List<Voertuig> voertuigen = rm.getVoertuigen();
             if(datePicker.SelectedDate == null)
             {
                 MessageBox.Show("Please select date first!", "Oops!", MessageBoxButton.OK);
+
+                comboBoxArrangement.SelectionChanged -= arrangement_Changed;// omslachtige manier om het event geen 2de keer op te roepen in deze event..
                 comboBoxArrangement.SelectedItem = null;
+                comboBoxArrangement.SelectionChanged += arrangement_Changed;
             }
             else
             {
                 List<Voertuig> unavailableCars = new List<Voertuig>();
                 var unavailableListByReservation = rm.getVoertuigenUnAvailableOnDate(datePicker.SelectedDate.Value);
                 IEnumerable<Voertuig> unavailableListByArrangement;
-                if (comboBoxArrangement.SelectedIndex == 2)
+                if (comboBoxArrangement.SelectedIndex == 2)// 2 = wedding
                 {
                     unavailableListByArrangement = voertuigen.Where(s => s.Wedding.ToString().StartsWith("0"));
 
@@ -117,7 +106,7 @@ namespace Vip_Services_Rudy_2020
                     timeStart.Value = 7;
                     timeStart.Maximum = 15;
                 }
-                else if (comboBoxArrangement.SelectedIndex == 4)
+                else if (comboBoxArrangement.SelectedIndex == 4)// 4 = NightLife
                 {
                     unavailableListByArrangement = voertuigen.Where(s => s.NightLife.ToString().StartsWith("0"));
 
@@ -125,7 +114,7 @@ namespace Vip_Services_Rudy_2020
                     timeStart.Value = 20;
                     timeStart.Maximum = 24;
                 }
-                else if (comboBoxArrangement.SelectedIndex == 3)
+                else if (comboBoxArrangement.SelectedIndex == 3)// 3 = Wellness
                 {
                     unavailableListByArrangement = voertuigen.Where(s => s.Wellness.ToString().StartsWith("0"));
 
@@ -156,9 +145,8 @@ namespace Vip_Services_Rudy_2020
 
                 comboBoxVoertuig.Items.Clear();
                 foreach(Voertuig v in voertuigen)
-                {
                     comboBoxVoertuig.Items.Add($"{ v.Naam} ,{ v.Id}");
-                }
+
             }
         }
         private void startuur_Changed(object sender, RoutedEventArgs e)
@@ -166,7 +154,10 @@ namespace Vip_Services_Rudy_2020
             if(comboBoxArrangement.SelectedItem == null)
             {
                 MessageBox.Show("Please select type of arrangement first!", "Oops!", MessageBoxButton.OK);
+
+                timeStart.ValueChanged -= startuur_Changed;
                 timeStart.Value = null;
+                timeStart.ValueChanged += startuur_Changed;
             }
             else
             {
@@ -179,10 +170,13 @@ namespace Vip_Services_Rudy_2020
 
         private void comboBoxVoertuig_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(comboBoxArrangement.SelectedItem == null)
+            if (comboBoxArrangement.SelectedItem == null)
             {
-                comboBoxVoertuig.SelectedItem = null;
                 MessageBox.Show("Please select type of arrangement first!", "Oops!", MessageBoxButton.OK);
+
+                comboBoxVoertuig.SelectionChanged -= comboBoxVoertuig_SelectionChanged;
+                comboBoxVoertuig.SelectedItem = null;
+                comboBoxVoertuig.SelectionChanged += comboBoxVoertuig_SelectionChanged;
             }
         }
     }
