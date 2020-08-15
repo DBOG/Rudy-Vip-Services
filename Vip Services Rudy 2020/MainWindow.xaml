@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Vip_Services_Rudy_2020"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="1000">
+        Title="MainWindow" Height="550" Width="1200">
     <Grid>
         <Grid Width="140" HorizontalAlignment="Left" Background="#ec9706">
             <Grid.ColumnDefinitions>

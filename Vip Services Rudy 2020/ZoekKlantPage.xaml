@@ -25,9 +25,9 @@
             <Label Grid.Row="1" Grid.Column="1" Margin="7">Geef deel/volledige naam op:</Label>
             <TextBox Grid.Row="1" Grid.Column="2" Margin="7" x:Name="txtBoxKlantNaam" TextChanged="txtBoxKlantNaam_TextChanged"></TextBox>
         </Grid>
-        <ListView x:Name="listviewKlanten" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="LightGray" Height="275" Width="700" Margin="50,10,0,50">
+        <ListView x:Name="listviewKlanten" HorizontalAlignment="Left" VerticalAlignment="Bottom" Height="275" Width="700" Margin="50,10,0,50">
             <ListView.View>
-                <GridView>
+                <GridView >
                     <GridViewColumn Header="KlantNummer" Width="90" DisplayMemberBinding="{Binding KlantID}"/>
                     <GridViewColumn Header="Categorie" Width="90" DisplayMemberBinding="{Binding Type}"/>
                     <GridViewColumn Header="Naam" Width="90" DisplayMemberBinding="{Binding Naam}"/>
